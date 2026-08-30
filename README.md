@@ -57,6 +57,7 @@ plug the juno-d in over usb before loading the page. if the synth was in a mode 
 
 <img width="613" height="442" alt="screenshot 2026-08-30 at 10 30 31 am" src="https://github.com/user-attachments/assets/2bdab6a5-df8d-475b-b4dc-0b90aac7d9b5" />
 
+
 the whole thing is really just four files.
 
 **`web/lib/midi.ts`** wraps web midi. it picks the first output containing "juno" in its name, exposes primitives (`noteon`, `cc`, `program`, `panic`), and an `execute(action)` dispatcher for one-shot notes, chords, and sequences. scheduled sends use `midioutput.send(bytes, timestamp)` so timing is precise even when the js thread hiccups.
