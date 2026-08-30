@@ -70,7 +70,7 @@ the whole thing is really just four files.
 
 **`web/app/page.tsx`** wires it together. push-to-talk mic, log panel, live track list, chord pads, cutoff and reverb sliders, patch selector, panic.
 
-full video:
+full video (u have to click):
 
 <a href="https://youtu.be/mGpyjZH0fP0">
   <img
