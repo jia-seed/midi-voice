@@ -1,12 +1,19 @@
 # midi voice
-i rewrote this thing personally for best understanding so you can enjoy me rattling off. 
+i rewrote this thing personally for best understanding.
 
 this is a way to interface by voice with midis. i was sick and tired of having to watch youtube videos on how to do loops on my juno-d8 when i should just be able to talk to it and it does my bidding. 
 
 #first off, hacking into the thing and running a python script to play a note
-<img width="1273" height="473" alt="Screenshot 2026-08-30 at 9 32 47 am" src="https://github.com/user-attachments/assets/c2cade97-b543-4b01-877a-25cd9b132969" />
 
+<img width="1277" height="208" alt="Screenshot 2026-08-30 at 9 33 47 am" src="https://github.com/user-attachments/assets/814c660d-552e-4d9f-9589-122cd55ca129" />
 
+``` import mido, time                                             
+  port = mido.open_output('JUNO-D MIDI IN1')
+  for n in (60, 64, 67): port.send(mido.Message('note_on', note=n,
+  velocity=100))                                                
+  time.sleep(1.2)                                               
+  for n in (60, 64, 67): port.send(mido.Message('note_off', note=n))
+```
 
 Voice-controlled Roland JUNO-D from a browser. Hold a mic button, speak, and Claude drives the synth over MIDI. Includes a live looper for layering complementary parts.
 
