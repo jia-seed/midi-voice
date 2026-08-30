@@ -14,6 +14,7 @@ export type Track = {
   program: number;
   channel: number;
   notes: NoteEvent[];
+  startTime: number;
 };
 
 export type LoopState = {
@@ -60,8 +61,7 @@ export function useLooper(send: Send) {
     for (const t of s.tracks) {
       for (const n of t.notes) {
         const noteOffset = n.beat * beatDur;
-        // find first iteration i where absTime >= from
-        const firstAbs = loopStartRef.current + noteOffset;
+        const firstAbs = t.startTime + noteOffset;
         let i = Math.max(0, Math.ceil((from - firstAbs) / loopDur));
         let absTime = firstAbs + i * loopDur;
         const vel = Math.max(1, Math.min(127, n.velocity ?? 100));
@@ -105,13 +105,15 @@ export function useLooper(send: Send) {
 
   const startLoop = useCallback(
     (bpm?: number, bars?: number) => {
-      loopStartRef.current = performance.now();
-      scheduledUntilRef.current = loopStartRef.current;
+      const now = performance.now();
+      loopStartRef.current = now;
+      scheduledUntilRef.current = now;
       setState((s) => ({
         ...s,
         running: true,
         bpm: bpm ?? s.bpm,
         bars: bars ?? s.bars,
+        tracks: s.tracks.map((t) => ({ ...t, startTime: now })),
       }));
     },
     []
@@ -143,7 +145,10 @@ export function useLooper(send: Send) {
           existing?.channel ??
           findFreeChannel(s.tracks.map((t) => t.channel));
         send([0xc0 | (channel & 0x0f), program & 0x7f]);
-        const track: Track = { label, program, channel, notes };
+        const startTime = s.running
+          ? performance.now()
+          : loopStartRef.current || performance.now();
+        const track: Track = { label, program, channel, notes, startTime };
         const next = existing
           ? s.tracks.map((t) => (t.label === label ? track : t))
           : [...s.tracks, track];
