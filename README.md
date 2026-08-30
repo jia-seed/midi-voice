@@ -1,4 +1,4 @@
-# midi-voice
+# midi voice
 
 Voice-controlled Roland JUNO-D from a browser. Hold a mic button, speak, and Claude drives the synth over MIDI. Includes a live looper for layering complementary parts.
 
