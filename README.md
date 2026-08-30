@@ -15,6 +15,10 @@ this is a way to interface by voice with midis. i was sick and tired of having t
   for n in (60, 64, 67): port.send(mido.Message('note_off', note=n))
 ```
 
+here's the video of it playing one note. 
+
+https://github.com/user-attachments/assets/1ff2b43a-0334-435d-8a5d-74c8877e0716
+
 Voice-controlled Roland JUNO-D from a browser. Hold a mic button, speak, and Claude drives the synth over MIDI. Includes a live looper for layering complementary parts.
 
 ## What it does
